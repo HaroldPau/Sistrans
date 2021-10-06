@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c156e127-6b2d-408e-8893-a8ec37db60ce">
+	<property name="ireport.zoom" value="1.771561000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fecha" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="vehiculo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="padron" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select  precio ,sum (cantidad) AS PASAJEROS, sum (cantidad * precio) as total , (p.nombre +' ' +p.apellido_pa + ' '+p.apellido_ma) as responsable ,l.vuelta from det_liquidacion dl
+inner join Liquidacion l on dl.cod_liquidacion = l.codigo_liq
+inner join Personal p on l.responsable = p.codigo_personal where fecha = $P{fecha} and l.vehiculo = $P{vehiculo} group by precio,fecha,nombre,apellido_pa,apellido_ma,VUELTA,p.codigo_personal ORDER BY NOMBRE]]>
+	</queryString>
+	<field name="precio" class="java.lang.Double"/>
+	<field name="PASAJEROS" class="java.lang.Integer"/>
+	<field name="total" class="java.lang.Double"/>
+	<field name="responsable" class="java.lang.String"/>
+	<field name="vuelta" class="java.lang.Integer"/>
+	<variable name="total_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
+	</variable>
+	<variable name="PASAJEROS_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{PASAJEROS}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="39" splitType="Stretch">
+			<rectangle>
+				<reportElement x="-20" y="-20" width="597" height="59" backcolor="#0099FF" uuid="55f94e9f-5b17-4603-ba33-dc3cbd6c1d98"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="80" y="4" width="261" height="35" forecolor="#FFFFFF" uuid="afa1d113-d392-420c-9f59-ef7be6236895"/>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LIQUIDACION DEL PADRON -]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="341" y="4" width="46" height="35" forecolor="#FFFFFF" uuid="f56c051a-415f-46ab-bbf6-e79c9abc8ab6"/>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{padron}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="388" y="4" width="147" height="35" forecolor="#FFFFFF" uuid="106cffd0-9949-44eb-a34f-b924bd3abc5c"/>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="482" y="0" width="73" height="20" uuid="279efc04-b777-4ae2-8073-c09490d1fdd9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[RECAUDADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="0" width="100" height="20" uuid="bad9b2bf-4410-4234-8823-7a8aa352f5a3"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[RESPONSABLE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="264" y="0" width="46" height="20" uuid="c50b7098-6b59-474a-a15b-231a85285a2d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[VUELTA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="408" y="0" width="49" height="20" uuid="61c3bf11-ccf7-45cd-ab8e-5bb93ecb1662"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[VENDIDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="328" y="0" width="59" height="20" uuid="792375b7-d723-4053-a152-39920d432126"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRECIO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="517" y="0" width="38" height="20" uuid="71653a08-4863-4708-9a5b-55b78a95f329"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="19" y="0" width="245" height="20" uuid="8af32fca-a2d6-49b9-8282-b4f6d7402b36"/>
+				<textFieldExpression><![CDATA[$F{responsable}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="264" y="0" width="46" height="20" uuid="f512d20b-5e08-4f3c-8f1b-279c7288e36d"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{vuelta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="408" y="0" width="49" height="20" uuid="6a89da73-6f06-4c81-9e4f-4ffc0b171736"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{PASAJEROS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="355" y="0" width="32" height="20" uuid="32fba1a7-d6e3-4bff-9d2b-63f624f2f7d2"/>
+				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="497" y="0" width="20" height="20" uuid="dd697f4b-cee0-4bfd-9bc4-dca70c073674"/>
+				<text><![CDATA[S/.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="341" y="0" width="14" height="20" uuid="aa31da5c-9fdd-4c54-ab2b-a97c76ca3868"/>
+				<text><![CDATA[S/.]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="356" y="19" width="76" height="20" uuid="d9d65d6f-313d-4520-a550-a7bc54e5825c"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL: S/.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="432" y="19" width="103" height="20" forecolor="#FF0000" uuid="95731041-de23-49ab-bb6f-2d33d8dd5424"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="19" y="19" width="100" height="20" uuid="8fbab218-76ce-46aa-9dff-413a3e4d0bd1"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PASAJEROS:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="117" y="19" width="136" height="23" forecolor="#FF0000" uuid="bae42bc2-c103-4c5e-8b2e-109ff7e5b456"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PASAJEROS_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

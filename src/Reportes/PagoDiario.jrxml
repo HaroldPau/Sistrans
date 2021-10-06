@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="89e306d7-9abf-4a03-a740-c878208aec98">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fecha" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT (select convert(varchar(30),fecha,5))as fecha ,codigo_rec,monto_total FROM Recibo_Pago where fecha = $P{fecha}]]>
+	</queryString>
+	<field name="fecha" class="java.lang.String"/>
+	<field name="codigo_rec" class="java.lang.Integer"/>
+	<field name="monto_total" class="java.lang.Double"/>
+	<variable name="monto_total_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto_total}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="79" uuid="510a8f36-d761-4416-8a67-228cdbffe6d7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE PAGO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="30" y="2" width="100" height="20" uuid="78b09db3-b89a-4d3e-908a-0e0a99b632b7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="203" y="2" width="122" height="20" uuid="13a9f48a-e1d3-4e68-a766-e3a4bbb5782c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NUMERO DE RECIBO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="413" y="2" width="100" height="20" uuid="ed157c7a-e7e3-4220-a5a1-df3cebd2fcaf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[MONTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="76" y="2" width="100" height="20" uuid="a0875ddb-a2c6-4c4d-8cde-0593558ed3db"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="203" y="12" width="100" height="20" uuid="cf3e24fb-ef64-4d40-9802-01b96608e3c2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigo_rec}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="413" y="12" width="100" height="20" uuid="eb96584d-eb83-4609-9e16-fde89372d5d1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{monto_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="46" y="12" width="100" height="20" uuid="8445cea6-9dc6-4d30-a964-4ceb38ccbdcc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement x="403" y="0" width="130" height="42" forecolor="#FF0000" uuid="3b7704d7-f470-4ee7-983f-ae14dbb297f8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{monto_total_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="198" y="0" width="205" height="42" uuid="d8cc3fe3-722f-4c76-bb1f-1f57afcfbdb0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[TOTAL RECAUDADO:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

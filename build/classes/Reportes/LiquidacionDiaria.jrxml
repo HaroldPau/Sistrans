@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cfc97232-9e3b-4ebf-8fe7-699518cb043e">
+	<property name="ireport.zoom" value="1.9487171000000019"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fecha" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select v.padron,(p.apellido_pa+' '+p.apellido_ma +', ' + p.nombre) nombres,sum(dl.cantidad)pasajeros, l.vuelta , sum (dl.cantidad*precio)recaudado  from det_liquidacion dl 
+inner join Liquidacion l on l.codigo_liq = dl.cod_liquidacion
+inner join Personal p on p.codigo_personal = l.responsable 
+inner join vehiculo v on v.codigo_vehiculo = l.vehiculo where l.fecha = $P{fecha} group by v.padron, p.apellido_pa , p.apellido_ma, p.nombre ,l.vuelta]]>
+	</queryString>
+	<field name="padron" class="java.lang.Integer"/>
+	<field name="nombres" class="java.lang.String"/>
+	<field name="pasajeros" class="java.lang.Integer"/>
+	<field name="vuelta" class="java.lang.Integer"/>
+	<field name="recaudado" class="java.lang.Double"/>
+	<variable name="pasajeros_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{pasajeros}]]></variableExpression>
+	</variable>
+	<variable name="recaudado_1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{recaudado}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="52" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Opaque" x="-20" y="-19" width="595" height="71" forecolor="#0099FF" backcolor="#0099FF" uuid="d55764c1-7b4b-43b5-b8e3-b4a616defb53"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="73" y="0" width="281" height="32" forecolor="#FFFFFF" uuid="2193edf7-ff5b-4775-bdf1-9e342704d559"/>
+				<textElement>
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE PRODUCCIÓN]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy" isBlankWhenNull="false">
+				<reportElement x="386" y="0" width="143" height="32" forecolor="#FFFFFF" uuid="ecf6f6dc-3735-4476-b38d-1b3a51c78144"/>
+				<textElement>
+					<font size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement x="16" y="2" width="46" height="20" uuid="02af4955-4cb9-4ea8-96f0-68d7f86c5121"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PADRON]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="73" y="2" width="100" height="20" uuid="a39dac91-0350-4ae3-a8f7-6abcfec59b63"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[RESPONSABLES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="316" y="2" width="70" height="20" uuid="627e1f2d-b81d-4022-9630-73459a285028"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PASAJEROS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="397" y="2" width="48" height="20" uuid="b395c31e-63cc-4ffa-9f76-881872fa701a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[VUELTAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="2" width="100" height="20" uuid="da0e7988-266f-4eff-a5f0-418c55fe0973"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[RECAUDADO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="16" y="0" width="46" height="20" uuid="31871447-8593-4367-8999-77269755fd54"/>
+				<textElement textAlignment="Center">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{padron}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="73" y="0" width="232" height="20" uuid="67db7838-3a57-4bb5-995e-ecefdc3be584"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="316" y="0" width="70" height="20" uuid="702fd546-758f-447b-bcaf-0dedcb0893e9"/>
+				<textElement textAlignment="Center">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pasajeros}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="397" y="0" width="48" height="20" uuid="0e2ae4b2-a51a-4e49-9ded-a44b506a130e"/>
+				<textElement textAlignment="Center">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vuelta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="485" y="0" width="67" height="20" uuid="dfe82111-a026-40e8-9870-4abcf439fd89"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{recaudado}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="470" y="0" width="15" height="20" uuid="86eab77d-be59-4099-9a00-636657d4047f"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[S/.]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="62" y="12" width="111" height="20" uuid="d9c0f8bc-2ca7-4a67-9030-4dc559556ea3"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Pasajeros:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="422" y="12" width="15" height="20" uuid="42825f27-2cbb-4c79-94a5-dafea3981a02"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[S/.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="294" y="12" width="121" height="20" uuid="20226616-a40d-4bed-9f49-6904987dd95b"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Recaudado:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="173" y="12" width="108" height="20" uuid="13bc495a-2910-49dd-bfe7-5ca10ab60702"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{pasajeros_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="438" y="12" width="61" height="20" uuid="1936926f-09ca-4961-a898-ff8a0b253462"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{recaudado_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
